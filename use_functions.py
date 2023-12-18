@@ -33,20 +33,44 @@
 
 Для реализации основного меню можно использовать пример ниже или написать свой
 """
+history = {}
+acc = 1000
+
+def account_change(reason, summ):
+    history[reason] = summ
+def account_increase(acc_internal):
+    acc_inc = int(input('На сколько хотите пополнить счет? '))
+    acc_internal += acc_inc
+    #account_change('Пополнение', acc_inc)
+    return acc_internal
+def purchase(acc_internal):
+    acc_dec = int(input('На сколько хотите совершить попкупку? '))
+    if acc_internal >= acc_dec:
+        acc_dec_name = input('что купим? ')
+        acc_internal -= acc_dec
+        account_change(acc_dec_name, ~acc_dec)
+    else:
+        print('Неверная сумма')
+    return acc_internal
+def print_history():
+    print('Ваши покупки:')
+    for key, value in history.items():
+        print(key, value)
 
 while True:
+    print(f'Ваш счет {acc} тугриков')
     print('1. пополнение счета')
     print('2. покупка')
     print('3. история покупок')
     print('4. выход')
 
-    choice = input('Выберите пункт меню')
+    choice = input('Выберите пункт меню ')
     if choice == '1':
-        pass
+        acc = account_increase(acc)
     elif choice == '2':
-        pass
+        acc = purchase(acc)
     elif choice == '3':
-        pass
+        print_history()
     elif choice == '4':
         break
     else:
